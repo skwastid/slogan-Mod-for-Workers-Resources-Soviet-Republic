@@ -4,6 +4,10 @@
 
 Create fixed 3D slogan monuments from fonts installed on your computer.
 
+## Steam Workshop
+
+Subscribe to [your own big slogan on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3837972328) for 18 ready-made red 3D slogan buildings. The generator is not required to use these buildings; download it from Releases below to create your own text, fonts, sizes and colours.
+
 ## Download
 
 Download the Windows x64 portable ZIP from [Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases), extract the entire archive, and run `SloganGenerator.exe`. Python is not required. Keep the `_internal` folder next to the executable.

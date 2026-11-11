@@ -4,6 +4,10 @@
 
 把电脑里的字体变成《工人与资源：苏维埃共和国》可放置的立体标语建筑。
 
+## Steam 创意工坊
+
+订阅 [your own big slogan 创意工坊建筑包](https://steamcommunity.com/sharedfiles/filedetails/?id=3837972328)，即可使用 18 款预制红色立体标语建筑，无需运行生成器。若要自定义文字、字体、尺寸和颜色，请从下方 Releases 下载生成器。
+
 ## 玩家下载
 
 从 [Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases) 下载 Windows 64 位便携版 ZIP，完整解压后双击 `SloganGenerator.exe`。不需要安装 Python；请保留旁边的 `_internal` 文件夹。
