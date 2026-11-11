@@ -21,3 +21,5 @@ SHA256SUMS.txt provides the download checksum. This release does not include the
 ## Limitations
 
 1–40 characters, one line. TTC uses the first font; complex shaping and color emoji are unsupported. T_ cannot edit generated text. Workshop IDs are local placeholders. Public sharing of models remains subject to the selected font's license. See the repository README for details.
+
+由 GPT-6 Astra 协助制作。 / Created with assistance from GPT-6 Astra.

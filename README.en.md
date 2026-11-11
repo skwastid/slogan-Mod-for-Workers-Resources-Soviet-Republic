@@ -42,3 +42,7 @@ Output: `dist/SloganGenerator-v0.3-windows-x64.zip`. Prefer a clean virtual envi
 Generated project IDs are local placeholders. Create a real Workshop item through the game before uploading; preserve its ITEM_ID and OWNER_ID. The generator never uploads automatically.
 
 No system fonts are bundled. Check the font license before publicly distributing generated glyph models. See [third-party notices](THIRD_PARTY_NOTICES.md). A project-wide open-source license has not yet been selected.
+
+## Credits
+
+Created with assistance from GPT-6 Astra.
