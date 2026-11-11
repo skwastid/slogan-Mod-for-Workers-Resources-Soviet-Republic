@@ -1,6 +1,6 @@
 # Slogan Mod for Workers & Resources: Soviet Republic
 
-[简体中文](README.md)
+[简体中文](README.zh-CN.md)
 
 Create fixed 3D slogan monuments from fonts installed on your computer.
 
