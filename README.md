@@ -1,1 +1,1 @@
-# slogen-Mod-for-Workers-Resources-Soviet-Republic
+# slogan-Mod-for-Workers-Resources-Soviet-Republic
