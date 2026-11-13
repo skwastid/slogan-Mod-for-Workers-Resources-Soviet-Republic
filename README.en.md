@@ -1,8 +1,8 @@
-# Slogan Mod for Workers & Resources: Soviet Republic
+# Build Your Own Giant Slogans — v1.0
 
 [简体中文](README.zh-CN.md)
 
-Create fixed 3D slogan monuments from fonts installed on your computer.
+Create fixed 3D slogan buildings from your own text, installed fonts or images.
 
 ## Steam Workshop
 
@@ -12,13 +12,21 @@ Subscribe to [your own big slogan on Steam Workshop](https://steamcommunity.com/
 
 Download the Windows x64 portable ZIP from [Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases), extract the entire archive, and run `SloganGenerator.exe`. Python is not required. Keep the `_internal` folder next to the executable.
 
-Choose an interface language, enter text, select an installed font, adjust height/depth/color/extra weight, and generate a building. Copy the generated numeric folder to the game's `media_soviet/workshop_wip` folder and restart the game. Find `Custom Slogan` in the mod building menu.
+Choose a language, then use text mode or image mode. Open **3D / appearance / install** to preview the model, choose a base and weathering, then generate and install it into your game. Restart the game to load new buildings. You can also copy an exported numeric folder manually to `media_soviet/workshop_wip`.
 
-## Features
+## Version 1.0 features
 
-18 interface languages; installed-font discovery; optional TTF/OTF/TTC import; 1–40 characters including spaces; adjustable 1–30m height and 0.1–5m depth; color and extra weight; live flat font preview; missing-glyph and vertex-limit checks.
+- **Text:** installed-font discovery, optional TTF/OTF/TTC import, multiline and upright vertical text, adjustable spacing, size, depth, weight, colour and building names.
+- **Images:** cropping, four-point perspective correction, threshold or colour extraction, eyedropper, noise removal, paint/erase tools and source overlay.
+- **Layout:** cut lettering into movable pieces; rotate, scale, multiselect, align and distribute with equal gaps.
+- **Appearance:** live 3D preview, long plinth/no base/slogan wall, weathering and rendered building thumbnails.
+- **Projects:** full project saving, autosave and recovery, including editable pieces and appearance settings. Only the current 1.0 project format is supported.
+- **Installation:** generate and install into local `workshop_wip`; verify copied files and never overwrite existing buildings.
+- **Languages:** all 18 interface languages across text, image, layout and 3D windows. OS dialogs follow Windows language settings; technical library diagnostics may remain in their original language.
 
-Text is embedded in the mesh and cannot be edited with the in-game T_ button. The preview is not an in-game 3D render. TTC uses its first font. Complex script shaping, arbitrary combining marks and color emoji are not supported. Character coverage depends on the selected font.
+Portable download: approximately **48 MB**, extracted application approximately **105 MB**. See the [1.0 guide](V1_GUIDE.md) and [release notes](RELEASE_NOTES_v1.0.md).
+
+Text is fixed geometry, not editable with the game's T_ tool. Image extraction preserves visible outlines rather than recognizing or reconstructing a font; manual repair may be needed. Preview lighting differs from the game. TTC uses its first font. Complex script shaping, arbitrary combining marks and colour emoji are not supported. Character coverage depends on the selected font. Text is limited to 120 characters / 12 lines and the model vertex limit.
 
 ## Development
 
@@ -39,7 +47,9 @@ python -m pip install -r requirements-build.txt
 .\build.ps1
 ```
 
-Output: `dist/SloganGenerator-v0.3-windows-x64.zip`. Prefer a clean virtual environment for builds. The current Release is the previously validated portable build; this repository organizes its source paths and build/import scripts for development.
+Output: `dist/SloganGenerator-v1.0-windows-x64.zip`. Use a clean virtual environment; the build enforces an extracted application below 400 MB. The tested dependency set is recorded in `requirements-v1.0-lock.txt`.
+
+Run checks with `python -m unittest discover -s tests -v`. The packaged EXE also supports `--localization-self-test report.json` and `--studio-self-test test-output`.
 
 ## Workshop and licensing
 
@@ -49,4 +59,4 @@ No system fonts are bundled. Check the font license before publicly distributing
 
 ## Credits
 
-Created with assistance from GPT-6 Astra.
+Created by skwastid, with assistance from GPT-6 Astra.

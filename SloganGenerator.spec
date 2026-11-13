@@ -7,6 +7,7 @@ for name in ('concrete.dds','blankspecular.dds','blankbump.dds'):
         raise SystemExit('First run tools/import_game_assets.py with your game directory.')
 datas,binaries,hiddenimports=collect_all('shapely')
 datas.append((str(root/'assets'),'assets'))
+datas.append((str(root/'locales'),'locales'))
 a=Analysis([str(root/'app.py')],pathex=[str(root)],binaries=binaries,datas=datas,
  hiddenimports=hiddenimports,hookspath=[],hooksconfig={'matplotlib':{'backends':['Agg']}},runtime_hooks=[],
  excludes=['PyQt5','PyQt6','PySide6','scipy','pandas','IPython','torch','tensorflow'],noarchive=False)
