@@ -28,6 +28,20 @@ Portable download: approximately **48 MB**, extracted application approximately 
 
 Text is fixed geometry, not editable with the game's T_ tool. Image extraction preserves visible outlines rather than recognizing or reconstructing a font; manual repair may be needed. Preview lighting differs from the game. TTC uses its first font. Complex script shaping, arbitrary combining marks and colour emoji are not supported. Character coverage depends on the selected font. Text is limited to 120 characters / 12 lines and the model vertex limit.
 
+## Illustrated tutorials
+
+### Create a slogan from text
+
+Choose a language, enter your text, select a font and adjust the settings. Open the 3D preview to refine the appearance, then generate and install. If installation fails, check the game folder. Click the image to view it at full size.
+
+[![Text-to-building tutorial: font selection, appearance settings and game installation](docs/tutorials/text-mode-en.png)](docs/tutorials/text-mode-en.png)
+
+### Create a slogan from an image
+
+Select Image Mode, import your source image and crop the lettering. Extract it, adjust the threshold and noise removal if needed, then repair the strokes with the source overlay. Preview the model, choose its size, base and weathering, then generate and install.
+
+[![Image-to-building tutorial: cropping, extraction, repair, 3D preview and installation](docs/tutorials/image-mode-en.png)](docs/tutorials/image-mode-en.png)
+
 ## Development
 
 Windows x64, Python 3.11+ with tkinter, and an installed copy of the game are required.
