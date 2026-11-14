@@ -84,13 +84,13 @@ if '--self-test' in sys.argv:
     (testout/'success.txt').write_text(str(target),encoding='utf8')
     sys.exit(0)
 
-root=tk.Tk();root.title('3D Slogan Generator');root.geometry('1100x940');root.minsize(1020,900)
+root=tk.Tk();root.title('3D Slogan Generator');ui_theme.fit_window(root)
 style=ui_theme.setup(root)
 fonts={};fontchoice=tk.StringVar();text=tk.StringVar(value=DEFAULT_TEXT['简体中文'])
 height=tk.StringVar(value='9');thickness=tk.StringVar(value='1');stroke=tk.StringVar(value='0.11');color=tk.StringVar(value='#be0f0c')
 output=tk.StringVar(value=str(Path.home()/'Documents'/'SloganBuildings'));status=tk.StringVar();results=queue.Queue();busy=False
 preview_traces=[];preview_job=None
-page=None;current='简体中文';labels=[]
+page=None;page_scroll=None;current='简体中文';labels=[]
 building_name=tk.StringVar();direction=tk.StringVar(value='horizontal');line_spacing=tk.StringVar(value='1.3')
 appearance={};loading=False;recovery_ready=False;recovery_offered=False
 
@@ -141,20 +141,21 @@ def update_appearance(state,name):
 
 
 def clear():
-    global page,preview_job
+    global page,page_scroll,preview_job
     if preview_job is not None:
         root.after_cancel(preview_job);preview_job=None
     for var,handle in preview_traces:var.trace_remove('write',handle)
     preview_traces.clear()
-    if page is not None: page.destroy()
-    page=ttk.Frame(root,padding=24);page.pack(fill='both',expand=True)
+    if page_scroll is not None:page_scroll.destroy()
+    page_scroll=ui_theme.ScrollPage(root,min_width=900,padding=24);page_scroll.pack(fill='both',expand=True)
+    page=page_scroll.content
 
 def languages():
     if busy:return
     clear();root.title('3D Slogan Generator — Language / 语言')
     ttk.Label(page,text='YOUR OWN BIG SLOGAN',style='Brand.TLabel').pack(pady=(4,8))
     ttk.Label(page,text='选择语言 / Choose your language',style='Title.TLabel').pack(pady=(0,8))
-    ttk.Label(page,text='3D Slogan Generator · v1.0.1',style='Muted.TLabel').pack(pady=(0,18))
+    ttk.Label(page,text='3D Slogan Generator · v1.0.2',style='Muted.TLabel').pack(pady=(0,18))
     grid=ttk.Frame(page);grid.pack(fill='both',expand=True)
     for c in range(3):grid.columnconfigure(c,weight=1)
     for i,name in enumerate(STRINGS):
@@ -318,7 +319,7 @@ def form(language):
     button.configure(command=run)
     if not recovery_offered:
         recovery_offered=True
-        if '--ui-test' not in sys.argv and project_store.recovery_path('font').exists():
+        if '--ui-test' not in sys.argv and '--screen-self-test' not in sys.argv and project_store.recovery_path('font').exists():
             if messagebox.askyesno(tr('Recover project'),tr('Restore the last autosaved project?'),parent=root):recover_project()
         recovery_ready=True
 
@@ -326,7 +327,28 @@ def close_app():
     recovery.stop(flush=recovery_ready);root.destroy()
 root.protocol('WM_DELETE_WINDOW',close_app)
 languages()
-if '--ui-test' in sys.argv:
+if '--screen-self-test' in sys.argv:
+    import json,time
+    checks=[]
+    for scaling,width,screen_height in [(1.333,1024,700),(1.667,900,600),(2.0,800,520)]:
+        root.tk.call('tk','scaling',scaling);ui_theme.setup(root)
+        root.geometry(f'{width}x{screen_height}')
+        for mode in ('languages','form'):
+            languages() if mode=='languages' else form('简体中文')
+            for _ in range(6):root.update();time.sleep(.02)
+            assert root.winfo_height()==screen_height
+            page_scroll.canvas.yview_moveto(1);root.update()
+            assert page_scroll.canvas.yview()[1]>.999
+            if mode=='form':
+                button=next(w for w in page.grid_slaves(row=11) if w.winfo_class()=='TButton')
+                page_scroll.reveal(type('Event',(),{'widget':button})());root.update()
+                top=button.winfo_rooty();bottom=top+button.winfo_height()
+                assert top>=page_scroll.canvas.winfo_rooty()
+                assert bottom<=page_scroll.canvas.winfo_rooty()+page_scroll.canvas.winfo_height()+2
+            checks.append(dict(scaling=scaling,mode=mode,width=root.winfo_width(),height=root.winfo_height(),content_height=page.winfo_height()))
+    Path(sys.argv[sys.argv.index('--screen-self-test')+1]).write_text(json.dumps(checks,indent=2),encoding='utf8')
+    root.destroy()
+elif '--ui-test' in sys.argv:
     import json
     root.withdraw();checks=[]
     for lang in STRINGS:

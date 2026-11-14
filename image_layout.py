@@ -53,7 +53,9 @@ class LayoutEditor(tk.Toplevel):
     def __init__(self,parent):
         super().__init__(parent);self.parent=parent;self.tr=parent.tr;ui_theme.setup(self)
         self.title(self.tr('拆字与实时排列','Select letters · Live layout'))
-        self.geometry('1280x940');self.minsize(1160,880)
+        ui_theme.fit_window(self,1180,940)
+        self.page_scroll=ui_theme.ScrollPage(self,min_width=1060,min_height=800);self.page_scroll.pack(fill='both',expand=True)
+        content=self.page_scroll.content
         self.original=parent.mask.copy();self.base=self.original.copy()
         self.pieces=[];self.history=[];self.future=[];self.selected=None;self.selection=set()
         self.pending=Image.new('L',self.base.size);self.points=[];self.start=None;self.gesture=None
@@ -65,12 +67,12 @@ class LayoutEditor(tk.Toplevel):
         self.note=tk.StringVar(value=self.tr('先在上方选字，再点“加入排列”；下方直接拖动字块。','Select above, then Add to layout. Drag pieces directly below.'))
         self.syncing=False;self.live_job=None;self.group_job=None;self.grouping=False
         self.views={};self.photos={};self.bounds={};self.handles={}
-        bar=ui_theme.FlowBar(self,padding=8);bar.pack(fill='x')
+        bar=ui_theme.FlowBar(content,padding=8);bar.pack(fill='x')
         for mode,zh,en in [('rect','矩形框选','Rectangle'),('polygon','连续点选','Polygon')]:
             ttk.Radiobutton(bar,text=self.tr(zh,en),variable=self.mode,value=mode,command=self.clear_selection).pack(side='left',padx=3)
         for zh,en,fn in [('完成点选','Close polygon',self.finish_polygon),('清除选区','Clear selection',self.clear_selection),('加入排列 ↓','Add to layout ↓',self.cut),('撤销','Undo',self.undo),('重做','Redo',self.redo)]:
             ttk.Button(bar,text=self.tr(zh,en),command=fn,style='Primary.TButton' if fn==self.cut else 'TButton').pack(side='left',padx=3)
-        self.panes=ttk.Panedwindow(self,orient='vertical');self.panes.pack(fill='both',expand=True,padx=8)
+        self.panes=ttk.Panedwindow(content,orient='vertical');self.panes.pack(fill='both',expand=True,padx=8)
         source=ttk.LabelFrame(self.panes,text=self.tr('① 选字：拖框或连续点轮廓，双击完成。蓝色是待拆笔画，灰色是已拆部分。','① Select: drag rectangle or click polygon vertices; double-click to finish. Blue = selection, grey = extracted.'))
         self.panes.add(source,weight=1)
         self.source=tk.Canvas(source,bg='#eee9dd',highlightthickness=0);self.source.pack(fill='both',expand=True)
@@ -89,20 +91,20 @@ class LayoutEditor(tk.Toplevel):
         ttk.Button(side,text=self.tr('恢复原尺寸 / 角度','Reset size / angle'),command=self.reset_transform).pack(fill='x',pady=5)
         ttk.Button(side,text=self.tr('放回上方原图','Return to source'),command=self.return_piece).pack(fill='x')
         self.canvas=tk.Canvas(lower,bg='#faf8f2',highlightthickness=0);self.canvas.pack(fill='both',expand=True)
-        foot=ui_theme.FlowBar(self,padding=8);foot.pack(fill='x')
+        foot=ui_theme.FlowBar(content,padding=8);foot.pack(fill='x')
         ttk.Button(foot,text=self.tr('排成一行 / 底部对齐','One row / align bottoms'),command=self.arrange).pack(side='left')
         ttk.Button(foot,text=self.tr('保存工程','Save project'),command=parent.save_project).pack(side='left',padx=4)
         ttk.Button(foot,text=self.tr('适应窗口','Fit views'),command=self.fit).pack(side='left',padx=6)
         ttk.Checkbutton(foot,text=self.tr('保留未拆部分','Keep uncut pixels'),variable=self.keep,command=self.render_layout).pack(side='left')
         ttk.Button(foot,text=self.tr('应用到修补图','Apply to mask'),command=self.apply,style='Primary.TButton').pack(side='right')
-        operations=ui_theme.FlowBar(self,padding=(8,2));operations.pack(fill='x')
+        operations=ui_theme.FlowBar(content,padding=(8,2));operations.pack(fill='x')
         self.operations={self.tr('左对齐','Align left'):'left',self.tr('右对齐','Align right'):'right',self.tr('顶部对齐','Align top'):'top',self.tr('底部对齐','Align bottom'):'bottom',self.tr('水平居中','Center horizontally'):'center_x',self.tr('垂直居中','Center vertically'):'center_y',self.tr('水平等间距','Equal horizontal gaps'):'distribute_x',self.tr('垂直等间距','Equal vertical gaps'):'distribute_y'}
         self.operation=tk.StringVar(value=next(iter(self.operations)))
         ttk.Combobox(operations,textvariable=self.operation,values=list(self.operations),state='readonly',width=25).pack(side='left')
         ttk.Button(operations,text=self.tr('应用到选中字块','Apply to selected'),command=self.align_selected).pack(side='left',padx=5)
         ttk.Button(operations,text=self.tr('全选字块','Select all'),command=self.select_all).pack(side='left')
-        ttk.Label(self,textvariable=self.note,padding=(10,2),wraplength=1150).pack(fill='x')
-        ttk.Label(self,text=self.tr('Ctrl 点选多选 · 空白处拖框多选 · 拖动选中组；工程保留独立字块。再次用笔刷修补会合并字块，可撤销。','Ctrl-click / drag an empty area to multi-select. Drag selected pieces together. Projects preserve layers; painting merges them (undo available).'),padding=(10,2),wraplength=1120).pack(fill='x')
+        ttk.Label(content,textvariable=self.note,padding=(10,2),wraplength=1150).pack(fill='x')
+        ttk.Label(content,text=self.tr('Ctrl 点选多选 · 空白处拖框多选 · 拖动选中组；工程保留独立字块。再次用笔刷修补会合并字块，可撤销。','Ctrl-click / drag an empty area to multi-select. Drag selected pieces together. Projects preserve layers; painting merges them (undo available).'),padding=(10,2),wraplength=1120).pack(fill='x')
         for c in [self.source,self.canvas]:
             self.views[c]=[1.,20.,30.]
             c.bind('<MouseWheel>',lambda e,c=c:self.wheel(c,e))

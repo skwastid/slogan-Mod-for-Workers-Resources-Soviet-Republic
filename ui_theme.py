@@ -82,3 +82,88 @@ def cancel_callbacks(window):
             script=window.tk.call('after','info',token)[0]
             if str(script).split()[0] in commands:window.after_cancel(token)
         except Exception:pass
+
+
+def work_area(window):
+    """Work area in the same process coordinate space as Tk (taskbar excluded)."""
+    import sys
+    if sys.platform=='win32':
+        try:
+            import ctypes
+            from ctypes import wintypes
+            rect=wintypes.RECT()
+            if ctypes.windll.user32.SystemParametersInfoW(48,0,ctypes.byref(rect),0):
+                return rect.left,rect.top,rect.right,rect.bottom
+        except (OSError,AttributeError):pass
+    return 0,0,window.winfo_screenwidth(),window.winfo_screenheight()
+
+
+def fit_window(window,width=1100,height=940):
+    left,top,right,bottom=work_area(window)
+    width=max(200,min(width,right-left-32));height=max(150,min(height,bottom-top-64))
+    window.resizable(True,True)
+    window.minsize(min(640,width),min(400,height))
+    x=max(0,left+(right-left-width)//2);y=max(0,top+(bottom-top-height-32)//2)
+    window.geometry(f'{width}x{height}+{x}+{y}')
+
+
+class ScrollPage(ttk.Frame):
+    """Scrollable window content; nested editors keep their own wheel controls."""
+    def __init__(self,parent,min_width=900,min_height=0,padding=0):
+        import tkinter as tk
+        super().__init__(parent)
+        self.min_width=min_width;self.min_height=min_height;self.pending=None
+        self.canvas=tk.Canvas(self,highlightthickness=0,bg=BG)
+        self.vertical=ttk.Scrollbar(self,orient='vertical',command=self.canvas.yview)
+        self.horizontal=ttk.Scrollbar(self,orient='horizontal',command=self.canvas.xview)
+        self.canvas.configure(yscrollcommand=self.vertical.set,xscrollcommand=self.horizontal.set)
+        self.canvas.grid(row=0,column=0,sticky='nsew');self.vertical.grid(row=0,column=1,sticky='ns');self.horizontal.grid(row=1,column=0,sticky='ew')
+        self.rowconfigure(0,weight=1);self.columnconfigure(0,weight=1)
+        self.content=ttk.Frame(self.canvas,padding=padding)
+        self.item=self.canvas.create_window(0,0,anchor='nw',window=self.content)
+        self.canvas.bind('<Configure>',self.schedule);self.content.bind('<Configure>',self.schedule)
+        self.top=self.winfo_toplevel()
+        self.wheel_binding=self.top.bind('<MouseWheel>',self.wheel,add='+')
+        self.focus_binding=self.top.bind('<FocusIn>',self.reveal,add='+')
+    def schedule(self,event=None):
+        if self.pending is None:self.pending=self.after_idle(self.layout)
+    def layout(self):
+        self.pending=None
+        width=max(self.min_width,self.content.winfo_reqwidth(),self.canvas.winfo_width())
+        height=max(self.min_height,self.content.winfo_reqheight(),self.canvas.winfo_height())
+        self.canvas.itemconfigure(self.item,width=width,height=height)
+        self.canvas.configure(scrollregion=(0,0,width,height))
+    def owns(self,widget):
+        while widget is not None:
+            if widget is self.content:return True
+            widget=getattr(widget,'master',None)
+        return False
+    def wheel(self,event):
+        widget=event.widget
+        if widget is not self.canvas:
+            if not self.owns(widget):return
+            current=widget
+            while current is not self.content:
+                if current.winfo_class() in ('Canvas','Text','Listbox','TCombobox','TSpinbox','TScale'):return
+                current=current.master
+        direction=-1 if event.delta>0 else 1
+        if event.state&1:self.canvas.xview_scroll(direction*3,'units')
+        else:self.canvas.yview_scroll(direction*3,'units')
+        return 'break'
+    def reveal(self,event):
+        widget=event.widget
+        if not self.owns(widget) or widget.winfo_class() in ('Canvas','Frame','TFrame'):return
+        self.update_idletasks()
+        x=widget.winfo_rootx()-self.content.winfo_rootx();y=widget.winfo_rooty()-self.content.winfo_rooty()
+        for position,size,extent,total,view,moveto in [
+            (x,widget.winfo_width(),self.canvas.winfo_width(),self.content.winfo_width(),self.canvas.xview,self.canvas.xview_moveto),
+            (y,widget.winfo_height(),self.canvas.winfo_height(),self.content.winfo_height(),self.canvas.yview,self.canvas.yview_moveto)]:
+            start=view()[0]*total
+            if position<start:moveto(max(0,position-8)/max(1,total))
+            elif position+size>start+extent:moveto(max(0,position+size-extent+8)/max(1,total))
+    def destroy(self):
+        cancel_callbacks(self)
+        try:
+            self.top.unbind('<MouseWheel>',self.wheel_binding);self.top.unbind('<FocusIn>',self.focus_binding)
+        except Exception:pass
+        super().destroy()

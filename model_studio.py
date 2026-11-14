@@ -10,7 +10,9 @@ class ModelStudio(tk.Toplevel):
     def __init__(self,parent,language,builder,exporter,height=9,depth=1,color='#be0f0c',title='',initial=None,on_change=None,on_save=None,building_name=''):
         super().__init__(parent);self.parent=parent;self.language=language;self.zh=language in ('简体中文','繁體中文','繁体中文')
         self.builder=builder;self.exporter=exporter;self.title(self.tr('3D 预览与外观','3D preview & appearance'))
-        ui_theme.setup(self);self.transient(parent);self.grab_set();self.geometry('1180x940');self.minsize(1000,900)
+        ui_theme.setup(self);self.transient(parent);self.grab_set();ui_theme.fit_window(self,1180,940)
+        self.page_scroll=ui_theme.ScrollPage(self,min_width=940,min_height=780);self.page_scroll.pack(fill='both',expand=True)
+        content=self.page_scroll.content
         self.height=tk.StringVar(value=str(height));self.depth=tk.StringVar(value=str(depth));self.color=tk.StringVar(value=color)
         self.age=tk.DoubleVar(value=0);self.style=tk.StringVar();self.game=tk.StringVar(value=game_install.detect_game())
         self.status=tk.StringVar();self.asset_label=title
@@ -30,8 +32,8 @@ class ModelStudio(tk.Toplevel):
             if key in initial:setattr(self,key,float(initial[key]))
         self.revision=0;self.requested=True;self.timer=None;self.busy=False;self.exporting=False;self.pending_export=None
         self.queue=queue.Queue();self.cache=None;self.latest_project=None;self.controls=[]
-        ui_theme.heading(self,self.tr('预览、调整，然后导入游戏','Preview, refine, then install'),title.replace('\n',' / ')[:90] or self.tr('预览使用导出模型；游戏中的光照与阴影会有所不同。','Preview uses the export geometry; game lighting and shadows will differ.'))
-        body=ttk.Frame(self,padding=12);body.pack(fill='both',expand=True)
+        ui_theme.heading(content,self.tr('预览、调整，然后导入游戏','Preview, refine, then install'),title.replace('\n',' / ')[:90] or self.tr('预览使用导出模型；游戏中的光照与阴影会有所不同。','Preview uses the export geometry; game lighting and shadows will differ.'))
+        body=ttk.Frame(content,padding=12);body.pack(fill='both',expand=True)
         sidebar=ttk.Frame(body,width=300);sidebar.pack(side='right',fill='y');sidebar.pack_propagate(False)
         scroll=tk.Canvas(sidebar,highlightthickness=0,width=280,bg='#f4f6fa')
         scrollbar=ttk.Scrollbar(sidebar,orient='vertical',command=scroll.yview);scrollbar.pack(side='right',fill='y')
@@ -70,19 +72,19 @@ class ModelStudio(tk.Toplevel):
         age=ttk.Scale(side,from_=0,to=100,variable=self.age);age.pack(fill='x');self.controls.append(age)
         self.age_label=ttk.Label(side,text='0%');self.age_label.pack(anchor='w')
         ttk.Label(side,text=self.tr('0 全新 → 100 重度做旧\n褪色、锈蚀、脱漆；文字与底座同步。','0 new → 100 heavily aged\nFading, rust, chips; letters and base.'),wraplength=238,style='Muted.TLabel').pack(anchor='w',pady=5)
-        location=ttk.Frame(self,padding=(12,0));location.pack(fill='x')
+        location=ttk.Frame(content,padding=(12,0));location.pack(fill='x')
         ttk.Label(location,text=self.tr('游戏目录','Game folder')).pack(side='left')
         e=ttk.Entry(location,textvariable=self.game);e.pack(side='left',fill='x',expand=True,padx=6);self.controls.append(e)
         b=ttk.Button(location,text=self.tr('浏览','Browse'),command=self.browse);b.pack(side='right');self.controls.append(b)
-        bar=ui_theme.FlowBar(self,padding=12);bar.pack(fill='x')
+        bar=ui_theme.FlowBar(content,padding=12);bar.pack(fill='x')
         ttk.Checkbutton(bar,text=self.tr('道路参照（7米）','Road reference (7 m)'),variable=self.road_reference,command=self.changed).pack(side='left')
         self.generate_button=ttk.Button(bar,text=self.tr('生成建筑','Generate building'),command=lambda:self.generate(False));self.generate_button.pack(side='left',padx=(0,6))
         self.install_button=ttk.Button(bar,text=self.tr('导入刚生成的建筑','Install last export'),command=self.install_last,state='disabled');self.install_button.pack(side='left')
         if on_save:ttk.Button(bar,text=self.tr('保存完整工程','Save full project'),command=on_save).pack(side='left',padx=6)
         ttk.Button(bar,text=self.tr('恢复视角','Reset view'),command=self.reset_view).pack(side='left',padx=4)
         self.both_button=ttk.Button(bar,text=self.tr('生成并导入游戏','Generate & install'),command=lambda:self.generate(True),style='Primary.TButton');self.both_button.pack(side='right')
-        ttk.Label(self,textvariable=self.status,padding=(12,4),wraplength=1120).pack(fill='x')
-        ttk.Label(self,text=self.tr('安装至本地 workshop_wip，不上传创意工坊、不覆盖已有建筑。导入后重启游戏。','Installs to local workshop_wip. No upload or overwrite. Restart the game after importing.'),style='Muted.TLabel',padding=(12,4)).pack(fill='x')
+        ttk.Label(content,textvariable=self.status,padding=(12,4),wraplength=1120).pack(fill='x')
+        ttk.Label(content,text=self.tr('安装至本地 workshop_wip，不上传创意工坊、不覆盖已有建筑。导入后重启游戏。','Installs to local workshop_wip. No upload or overwrite. Restart the game after importing.'),style='Muted.TLabel',padding=(12,4)).pack(fill='x')
         for var in [self.height,self.depth,self.color,self.age,self.style,self.building_name,self.base_color,self.supports,*self.base_size.values()]:var.trace_add('write',self.changed)
         def scroll_settings(event):
             scroll.yview_scroll(-1 if event.delta>0 else 1,'units');return 'break'

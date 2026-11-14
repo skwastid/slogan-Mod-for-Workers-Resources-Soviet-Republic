@@ -1,6 +1,6 @@
-# [⬇ 下载生成器 v1.0.1 — Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.1)
+# [⬇ 下载生成器 v1.0.2 — Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.2)
 
-**下载 `SloganGenerator-v1.0.1-windows-x64.zip`，完整解压后运行 `SloganGenerator.exe`。无需安装 Python；请保留 `_internal` 文件夹。**
+**下载 `SloganGenerator-v1.0.2-windows-x64.zip`，完整解压后运行 `SloganGenerator.exe`。无需安装 Python；请保留 `_internal` 文件夹。**
 
 [English](README.md)
 
@@ -20,6 +20,12 @@
 
 ---
 
+## v1.0.2 更新内容
+
+- **fix**：修复小屏幕或较大显示缩放下窗口超出屏幕、无法缩小高度的问题，确保底部按钮和语言选项可以访问。
+- **add**：新增页面横向／纵向滚动，以及键盘聚焦控件时自动滚动到可见位置；编辑画布保留独立的缩放和平移操作。
+- **change**：初始窗口尺寸根据屏幕可用工作区调整，避开任务栏；降低最小窗口尺寸，并统一处理文字生成、图片编辑、字块重排和 3D 预览窗口。
+
 ## v1.0.1 更新内容
 
 - **add**：新增门牌石，可独立调整顶部／底部宽度、顶部／底部厚度和石体高度，文字贴合石面；新增可选铁架，包含等距立柱、横梁、斜撑及锈蚀效果；新增底座尺寸、颜色、墙体厚度调整和道路尺寸参照；中文界面新增字体中文名称、搜索及筛选功能；新增界面支持全部 18 种语言。
@@ -29,7 +35,7 @@
 
 已生成的建筑需使用新版重新生成并导入游戏。
 
-# 制作你的大标语 — v1.0.1
+# 制作你的大标语 — v1.0.2
 
 把电脑里的字体变成《工人与资源：苏维埃共和国》可放置的立体标语建筑。
 
@@ -82,7 +88,7 @@ python -m pip install -r requirements-build.txt
 .\build.ps1
 ```
 
-产物：`dist/SloganGenerator-v1.0.1-windows-x64.zip`。使用干净的虚拟环境构建；构建脚本限制解压体积不超过400MB。测试依赖见 `requirements-v1.0-lock.txt`。当前便携版下载约52MB，解压约108MB。
+产物：`dist/SloganGenerator-v1.0.2-windows-x64.zip`。使用干净的虚拟环境构建；构建脚本限制解压体积不超过400MB。测试依赖见 `requirements-v1.0-lock.txt`。当前便携版下载约52MB，解压约108MB。
 
 可用的冒烟检查：
 

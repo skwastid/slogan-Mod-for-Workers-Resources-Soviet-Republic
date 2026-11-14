@@ -1,6 +1,6 @@
-# [⬇ Download Generator v1.0.1 — Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.1)
+# [⬇ Download Generator v1.0.2 — Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.2)
 
-**Download `SloganGenerator-v1.0.1-windows-x64.zip`, extract the entire archive, and run `SloganGenerator.exe`. No Python required; keep the `_internal` folder beside the EXE.**
+**Download `SloganGenerator-v1.0.2-windows-x64.zip`, extract the entire archive, and run `SloganGenerator.exe`. No Python required; keep the `_internal` folder beside the EXE.**
 
 [简体中文](README.zh-CN.md)
 
@@ -20,9 +20,15 @@ Select Image Mode, import your source image and crop the lettering. Extract it, 
 
 ---
 
-# Build Your Own Giant Slogans — v1.0.1
+# Build Your Own Giant Slogans — v1.0.2
 
 Create fixed 3D slogan buildings from your own text, installed fonts or images.
+
+## v1.0.2
+
+- **fix**: Fixed windows exceeding the available screen height and being unable to shrink vertically on smaller screens or with larger display scaling. Bottom controls and language choices are now accessible.
+- **add**: Added horizontal and vertical page scrolling and automatic scrolling to focused controls. Editor canvas zoom and pan controls remain independent.
+- **change**: Initial window sizes now fit the available desktop work area, excluding the taskbar. Reduced minimum window sizes and applied the same scrolling approach to text generation, image editing, layout and 3D preview windows.
 
 ## v1.0.1
 
@@ -53,7 +59,7 @@ Choose a language, then use text mode or image mode. Open **3D / appearance / in
 - **Installation:** generate and install into local `workshop_wip`; verify copied files and never overwrite existing buildings.
 - **Languages:** all 18 interface languages across text, image, layout and 3D windows. OS dialogs follow Windows language settings; technical library diagnostics may remain in their original language.
 
-Portable download: approximately **52 MB**, extracted application approximately **108 MB**. See the usage details below and the [release notes](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.1).
+Portable download: approximately **52 MB**, extracted application approximately **108 MB**. See the usage details below and the [release notes](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.2).
 
 Text is fixed geometry, not editable with the game's T_ tool. Image extraction preserves visible outlines rather than recognizing or reconstructing a font; manual repair may be needed. Preview lighting differs from the game. TTC uses its first font. Complex script shaping, arbitrary combining marks and colour emoji are not supported. Character coverage depends on the selected font. Text is limited to 120 characters / 12 lines and the model vertex limit.
 
@@ -76,7 +82,7 @@ python -m pip install -r requirements-build.txt
 .\build.ps1
 ```
 
-Output: `dist/SloganGenerator-v1.0.1-windows-x64.zip`. Use a clean virtual environment; the build enforces an extracted application below 400 MB. The tested dependency set is recorded in `requirements-v1.0-lock.txt`.
+Output: `dist/SloganGenerator-v1.0.2-windows-x64.zip`. Use a clean virtual environment; the build enforces an extracted application below 400 MB. The tested dependency set is recorded in `requirements-v1.0-lock.txt`.
 
 Run checks with `python -m unittest discover -s tests -v`. The packaged EXE also supports `--localization-self-test report.json` and `--studio-self-test test-output`.
 

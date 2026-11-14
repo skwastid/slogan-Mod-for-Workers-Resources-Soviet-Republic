@@ -7,5 +7,5 @@ Copy-Item -LiteralPath README.md, README.zh-CN.md -Destination dist/SloganGenera
 Copy-Item -LiteralPath docs -Destination dist/SloganGenerator -Recurse -Force
 $portableBytes = (Get-ChildItem dist/SloganGenerator -Recurse -File | Measure-Object Length -Sum).Sum
 if ($portableBytes -ge 400000000) { throw "Portable folder exceeds 400 MB: $portableBytes bytes" }
-Compress-Archive -LiteralPath dist/SloganGenerator -DestinationPath dist/SloganGenerator-v1.0.1-windows-x64.zip -Force
-Write-Host "Built v1.0.1; extracted folder: $portableBytes bytes"
+Compress-Archive -LiteralPath dist/SloganGenerator -DestinationPath dist/SloganGenerator-v1.0.2-windows-x64.zip -Force
+Write-Host "Built v1.0.2; extracted folder: $portableBytes bytes"
