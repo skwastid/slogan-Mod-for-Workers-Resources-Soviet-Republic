@@ -144,5 +144,21 @@
   "Images": "Görseller",
   "Slogan project": "Yazı projesi",
   "Image mode (experimental)": "Görsel modu (deneysel)",
-  "Error details:": "Hata ayrıntıları:"
+  "Error details:": "Hata ayrıntıları:",
+  "Road reference (7 m)": "Referans yol (7 m)",
+  "Base length (m)": "Taban uzunluğu (m)",
+  "Base depth (m)": "Taban derinliği (m)",
+  "Plinth height (m)": "Kaide yüksekliği (m)",
+  "Wall height (m)": "Duvar yüksekliği (m)",
+  "0 = automatic size": "0 = otomatik boyut",
+  "Base color": "Taban rengi",
+  "Default material": "Varsayılan malzeme",
+  "Iron back supports": "Demir arka destekler",
+  "Wall thickness (m)": "Duvar kalınlığı (m)",
+  "Stone sign": "Taş tabela",
+  "Stone height (m)": "Taş yüksekliği (m)",
+  "Bottom width (m)": "Alt genişlik (m)",
+  "Top width (m)": "Üst genişlik (m)",
+  "Bottom thickness (m)": "Alt kalınlık (m)",
+  "Top thickness (m)": "Üst kalınlık (m)"
 }

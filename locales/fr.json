@@ -144,5 +144,21 @@
   "Images": "Images",
   "Slogan project": "Projet de slogan",
   "Image mode (experimental)": "Mode image (expérimental)",
-  "Error details:": "Détails de l’erreur :"
+  "Error details:": "Détails de l’erreur :",
+  "Road reference (7 m)": "Route de référence (7 m)",
+  "Base length (m)": "Longueur du socle (m)",
+  "Base depth (m)": "Profondeur du socle (m)",
+  "Plinth height (m)": "Hauteur du socle (m)",
+  "Wall height (m)": "Hauteur du mur (m)",
+  "0 = automatic size": "0 = taille automatique",
+  "Base color": "Couleur du socle",
+  "Default material": "Matériau par défaut",
+  "Iron back supports": "Supports arrière en fer",
+  "Wall thickness (m)": "Épaisseur du mur (m)",
+  "Stone sign": "Enseigne en pierre",
+  "Stone height (m)": "Hauteur de la pierre (m)",
+  "Bottom width (m)": "Largeur du bas (m)",
+  "Top width (m)": "Largeur du haut (m)",
+  "Bottom thickness (m)": "Épaisseur du bas (m)",
+  "Top thickness (m)": "Épaisseur du haut (m)"
 }

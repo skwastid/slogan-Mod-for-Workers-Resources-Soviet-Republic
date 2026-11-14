@@ -1,6 +1,6 @@
-# [⬇ Download Generator v1.0 — Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0)
+# [⬇ Download Generator v1.0.1 — Releases](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.1)
 
-**Download `SloganGenerator-v1.0-windows-x64.zip`, extract the entire archive, and run `SloganGenerator.exe`. No Python required; keep the `_internal` folder beside the EXE.**
+**Download `SloganGenerator-v1.0.1-windows-x64.zip`, extract the entire archive, and run `SloganGenerator.exe`. No Python required; keep the `_internal` folder beside the EXE.**
 
 [简体中文](README.zh-CN.md)
 
@@ -20,9 +20,18 @@ Select Image Mode, import your source image and crop the lettering. Extract it, 
 
 ---
 
-# Build Your Own Giant Slogans — v1.0
+# Build Your Own Giant Slogans — v1.0.1
 
 Create fixed 3D slogan buildings from your own text, installed fonts or images.
+
+## v1.0.1
+
+- **add**: Added stone signs with independent top/bottom widths, top/bottom thicknesses and stone height, with flush lettering that follows the face. Added optional iron frames with evenly spaced posts, rails, rear braces and rust. Added base dimensions, colours, wall thickness and a road size reference. Chinese interfaces now offer Chinese font names, search and filtering. New controls support all 18 interface languages.
+- **fix**: Fixed mirrored exports, wall model placement and preview rotation centres, and incorrect text-preview arguments.
+- **perf**: Cached preview geometry and textures and improved continuous dragging. Simplified shading is used during rotation; full textures return on release.
+- **change**: Compared with 1.0, appearance controls now use a scrollable panel. Project saving, model exports and thumbnails support the new base, frame and stone-sign settings.
+
+Previously generated buildings must be regenerated and installed again to receive these changes.
 
 ## Steam Workshop
 
@@ -44,7 +53,7 @@ Choose a language, then use text mode or image mode. Open **3D / appearance / in
 - **Installation:** generate and install into local `workshop_wip`; verify copied files and never overwrite existing buildings.
 - **Languages:** all 18 interface languages across text, image, layout and 3D windows. OS dialogs follow Windows language settings; technical library diagnostics may remain in their original language.
 
-Portable download: approximately **48 MB**, extracted application approximately **105 MB**. See the usage details below and the [release notes](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0).
+Portable download: approximately **52 MB**, extracted application approximately **108 MB**. See the usage details below and the [release notes](https://github.com/skwastid/slogan-Mod-for-Workers-Resources-Soviet-Republic/releases/tag/v1.0.1).
 
 Text is fixed geometry, not editable with the game's T_ tool. Image extraction preserves visible outlines rather than recognizing or reconstructing a font; manual repair may be needed. Preview lighting differs from the game. TTC uses its first font. Complex script shaping, arbitrary combining marks and colour emoji are not supported. Character coverage depends on the selected font. Text is limited to 120 characters / 12 lines and the model vertex limit.
 
@@ -67,7 +76,7 @@ python -m pip install -r requirements-build.txt
 .\build.ps1
 ```
 
-Output: `dist/SloganGenerator-v1.0-windows-x64.zip`. Use a clean virtual environment; the build enforces an extracted application below 400 MB. The tested dependency set is recorded in `requirements-v1.0-lock.txt`.
+Output: `dist/SloganGenerator-v1.0.1-windows-x64.zip`. Use a clean virtual environment; the build enforces an extracted application below 400 MB. The tested dependency set is recorded in `requirements-v1.0-lock.txt`.
 
 Run checks with `python -m unittest discover -s tests -v`. The packaged EXE also supports `--localization-self-test report.json` and `--studio-self-test test-output`.
 
@@ -95,6 +104,16 @@ Use **3D / appearance / install** from either the font screen or the image edito
 All generator windows support the same 18 interface languages, selected on the opening screen. Operating-system dialogs follow Windows language settings; raw technical diagnostics may retain library wording. Full projects preserve repaired pixels, extraction settings, movable character layers, appearance and camera settings. Only the current 1.0 project format is supported. Exported `generation.json` records appearance values.
 
 Build in a clean virtual environment using pip wheels instead of the Conda/MKL stack. The build script enforces an extracted portable folder below 400,000,000 bytes. Generated buildings and images are separate user output and are not included in that budget.
+
+### Base and preview controls
+
+- Stone sign: a trapezoidal stone with flat lettering on its front face. Set bottom/top widths, bottom/top thicknesses and stone height; a top thickness of 0 matches the bottom thickness. Lettering follows the sloping face; equal top/bottom widths make straight sides. A top width of 0 uses 90% of the bottom width; text fits proportionally inside the face. Uses a granite-like material, optional base colour and weathering. Letter extrusion and steel supports do not apply to this style.
+
+- Set base length, front-to-back depth, plinth height, wall height and wall thickness in metres; 0 uses the automatic size. Wall dimensions apply only to slogan walls. Wall models and preview rotation are centred on the wall, not the lettering.
+- Choose a custom base colour or restore the default concrete material. Weathering applies to either finish.
+- Optional regular back frames use evenly spaced posts, three horizontal rails, rear diagonal braces and foot plates. Automatic plinth depth expands to fit the braces. Supports use independent dark grey iron, with rust controlled by the weathering slider.
+- The 7 m wide road reference is preview-only. Camera dragging uses cached geometry and simplified shading; detailed textures return on release.
+- Dimensions, base colour and support choices are saved in full projects and used in exports and thumbnails.
 
 ### Projects and layout
 

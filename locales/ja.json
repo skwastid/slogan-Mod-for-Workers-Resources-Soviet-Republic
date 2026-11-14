@@ -144,5 +144,21 @@
   "Images": "画像",
   "Slogan project": "標語プロジェクト",
   "Image mode (experimental)": "画像モード（実験機能）",
-  "Error details:": "エラー詳細："
+  "Error details:": "エラー詳細：",
+  "Road reference (7 m)": "道路の比較表示（7m）",
+  "Base length (m)": "台座の長さ（m）",
+  "Base depth (m)": "台座の奥行き（m）",
+  "Plinth height (m)": "台座の高さ（m）",
+  "Wall height (m)": "壁の高さ（m）",
+  "0 = automatic size": "0 = 自動サイズ",
+  "Base color": "台座の色",
+  "Default material": "既定の材質",
+  "Iron back supports": "鉄製の背面支柱",
+  "Wall thickness (m)": "壁の厚さ（m）",
+  "Stone sign": "石製看板",
+  "Stone height (m)": "石の高さ（m）",
+  "Bottom width (m)": "底部の幅（m）",
+  "Top width (m)": "上部の幅（m）",
+  "Bottom thickness (m)": "底部の厚さ（m）",
+  "Top thickness (m)": "上部の厚さ（m）"
 }

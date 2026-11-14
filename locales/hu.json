@@ -144,5 +144,21 @@
   "Images": "Képek",
   "Slogan project": "Feliratprojekt",
   "Image mode (experimental)": "Képmód (kísérleti)",
-  "Error details:": "Hiba részletei:"
+  "Error details:": "Hiba részletei:",
+  "Road reference (7 m)": "Referenciaút (7 m)",
+  "Base length (m)": "Talapzat hossza (m)",
+  "Base depth (m)": "Talapzat mélysége (m)",
+  "Plinth height (m)": "Talapzat magassága (m)",
+  "Wall height (m)": "Fal magassága (m)",
+  "0 = automatic size": "0 = automatikus méret",
+  "Base color": "Talapzat színe",
+  "Default material": "Alapértelmezett anyag",
+  "Iron back supports": "Vas hátsó támaszok",
+  "Wall thickness (m)": "Fal vastagsága (m)",
+  "Stone sign": "Kőtábla",
+  "Stone height (m)": "Kő magassága (m)",
+  "Bottom width (m)": "Alsó szélesség (m)",
+  "Top width (m)": "Felső szélesség (m)",
+  "Bottom thickness (m)": "Alsó vastagság (m)",
+  "Top thickness (m)": "Felső vastagság (m)"
 }

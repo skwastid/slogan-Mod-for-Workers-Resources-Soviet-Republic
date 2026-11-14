@@ -6,8 +6,10 @@ from PIL import Image, ImageDraw, ImageFont
 import mesh
 import model_options, typography, export_helpers
 
-def generate(text, font, output, height=9., thickness=1., stroke=0., color='#be0f0c',base_style='strip',weathering=0,building_name='',direction='horizontal',line_spacing=1.3):
+def generate(text, font, output, height=9., thickness=1., stroke=0., color='#be0f0c',base_style='strip',weathering=0,building_name='',direction='horizontal',line_spacing=1.3,base_size=None,base_color=None,supports=False):
     base_style,weathering=model_options.options(base_style,weathering)
+    base_size=model_options.base_options(base_size)
+    supports=bool(supports) and base_style!='stone'
     text=typography.normalize(text)
     building_name=export_helpers.name(building_name)
     if not all(math.isfinite(v) for v in (height,thickness,stroke)) or not (1<=height<=30 and .1<=thickness<=5 and 0<=stroke<=.3):
@@ -30,11 +32,11 @@ def generate(text, font, output, height=9., thickness=1., stroke=0., color='#be0
         if (len(letters)+12)*3>=65536:
             raise ValueError('COMPLEX: Reduce text length or choose a simpler font.')
         depth=max(5.,thickness+2.)
-        base,letters,depth=model_options.geometry(letters,width,height,thickness,base_style)
-        model_options.write_geometry(d/'model.nmf',base,letters)
+        base,letters,depth=model_options.geometry(letters,width,height,thickness,base_style,base_size,supports)
+        model_options.write_geometry(d/'model.nmf',base,letters,len(raw_letters))
         for name in ['model.mtl','concrete.dds','blankspecular.dds','blankbump.dds','renderconfig.ini']:
             shutil.copy2(mesh.ASSETS/name,d/name)
-        model_options.write_materials(d,color,weathering)
+        model_options.write_materials(d,color,weathering,base_color,supports,base_style)
         ini=f'''$NAME_STR "{building_name or 'Custom Slogan '+ident[-6:]}"
 $TYPE_MONUMENT
 $MONUMENT_GOVERNMENT_LOYALTY_RADIUS 150
@@ -52,7 +54,7 @@ $CONNECTION_PEDESTRIAN
 end
 '''
         (d/'building.ini').write_text(ini,encoding='utf8')
-        export_helpers.thumbnail(root,raw_letters,width,height,thickness,base_style,color,weathering)
+        export_helpers.thumbnail(root,raw_letters,width,height,thickness,base_style,color,weathering,base_size,base_color,supports)
         (root/'workshopconfig.ini').write_text(f'''$ITEM_ID {ident}
 $OWNER_ID 0
 $ITEM_TYPE WORKSHOP_ITEMTYPE_BUILDING
@@ -62,6 +64,6 @@ $ITEM_NAME "{building_name or 'Custom Slogan '+ident[-6:]}"
 $ITEM_DESC "Locally generated fixed 3D text monument."
 $END
 ''',encoding='utf8')
-        (root/'generation.json').write_text(json.dumps(dict(building_name=building_name,direction=direction,line_spacing=line_spacing,text=text,font=font.name,height=height,thickness=thickness,stroke=stroke,color=color,vertices=(len(letters)+len(base))*3,base_style=base_style,weathering=weathering,local_only=True),ensure_ascii=False,indent=2),encoding='utf8')
+        (root/'generation.json').write_text(json.dumps(dict(building_name=building_name,direction=direction,line_spacing=line_spacing,text=text,font=font.name,height=height,thickness=thickness,stroke=stroke,color=color,vertices=(len(letters)+len(base))*3,base_style=base_style,weathering=weathering,base_size=base_size,base_color=base_color,supports=bool(supports),local_only=True),ensure_ascii=False,indent=2),encoding='utf8')
         shutil.copytree(root,dest)
     return dest

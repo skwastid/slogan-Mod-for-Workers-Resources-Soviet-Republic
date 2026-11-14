@@ -43,8 +43,8 @@ def box(lo,hi):
         tris.extend([(q[:3],n),([q[0],q[2],q[3]],n)])
     return tris
 
-def write_model(path,nodes):
-    body=b''.join(nodes);header=b'B3DMH\x0010'+pack('3I',2,len(nodes),20+128+len(body))+name('concrete')+name('red')
+def write_model(path,nodes,materials=('concrete','red')):
+    body=b''.join(nodes);header=b'B3DMH\x0010'+pack('3I',len(materials),len(nodes),20+64*len(materials)+len(body))+b''.join(name(material) for material in materials)
     path.write_bytes(header+body)
 
 def glyph_nodes(text,height=9.0,stroke=.11,font_path='',thickness=1.0):
@@ -83,5 +83,5 @@ def glyph_nodes(text,height=9.0,stroke=.11,font_path='',thickness=1.0):
                     q=[convert(a,-.5),convert(b,-.5),convert(b,.5),convert(a,.5)]
                     nn=(n[0],n[1],0)
                     tris.extend([(q[:3],nn),([q[0],q[2],q[3]],nn)])
-        nodes.extend([([(-p[0],p[1],p[2]) for p in pts],(-n[0],n[1],n[2])) for pts,n in tris])
+        nodes.extend(tris)
     return nodes,total

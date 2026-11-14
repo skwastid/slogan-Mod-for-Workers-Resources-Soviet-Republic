@@ -144,5 +144,21 @@
   "Images": "圖片",
   "Slogan project": "標語專案",
   "Image mode (experimental)": "圖片模式（實驗功能）",
-  "Error details:": "錯誤詳細資訊："
+  "Error details:": "錯誤詳細資訊：",
+  "Road reference (7 m)": "道路參照（7公尺）",
+  "Base length (m)": "底座長度（公尺）",
+  "Base depth (m)": "底座前後寬度（公尺）",
+  "Plinth height (m)": "台座高度（公尺）",
+  "Wall height (m)": "牆體高度（公尺）",
+  "0 = automatic size": "0 = 自動尺寸",
+  "Base color": "底座顏色",
+  "Default material": "預設材質",
+  "Iron back supports": "鐵製背部支架",
+  "Wall thickness (m)": "牆體厚度（公尺）",
+  "Stone sign": "門牌石",
+  "Stone height (m)": "石體高度（公尺）",
+  "Bottom width (m)": "底部寬度（公尺）",
+  "Top width (m)": "頂部寬度（公尺）",
+  "Bottom thickness (m)": "底部厚度（公尺）",
+  "Top thickness (m)": "頂部厚度（公尺）"
 }

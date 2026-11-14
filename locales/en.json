@@ -144,5 +144,21 @@
   "Images": "Images",
   "Slogan project": "Slogan project",
   "Image mode (experimental)": "Image mode (experimental)",
-  "Error details:": "Error details:"
+  "Error details:": "Error details:",
+  "Road reference (7 m)": "Road reference (7 m)",
+  "Base length (m)": "Base length (m)",
+  "Base depth (m)": "Base depth (m)",
+  "Plinth height (m)": "Plinth height (m)",
+  "Wall height (m)": "Wall height (m)",
+  "0 = automatic size": "0 = automatic size",
+  "Base color": "Base color",
+  "Default material": "Default material",
+  "Iron back supports": "Iron back supports",
+  "Wall thickness (m)": "Wall thickness (m)",
+  "Stone sign": "Stone sign",
+  "Stone height (m)": "Stone height (m)",
+  "Bottom width (m)": "Bottom width (m)",
+  "Top width (m)": "Top width (m)",
+  "Bottom thickness (m)": "Bottom thickness (m)",
+  "Top thickness (m)": "Top thickness (m)"
 }

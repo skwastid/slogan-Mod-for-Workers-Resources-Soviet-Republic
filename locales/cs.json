@@ -144,5 +144,21 @@
   "Images": "Obrázky",
   "Slogan project": "Projekt nápisu",
   "Image mode (experimental)": "Režim obrázku (experimentální)",
-  "Error details:": "Podrobnosti chyby:"
+  "Error details:": "Podrobnosti chyby:",
+  "Road reference (7 m)": "Referenční silnice (7 m)",
+  "Base length (m)": "Délka podstavce (m)",
+  "Base depth (m)": "Hloubka podstavce (m)",
+  "Plinth height (m)": "Výška podstavce (m)",
+  "Wall height (m)": "Výška stěny (m)",
+  "0 = automatic size": "0 = automatická velikost",
+  "Base color": "Barva podstavce",
+  "Default material": "Výchozí materiál",
+  "Iron back supports": "Železné zadní podpěry",
+  "Wall thickness (m)": "Tloušťka stěny (m)",
+  "Stone sign": "Kamenná cedule",
+  "Stone height (m)": "Výška kamene (m)",
+  "Bottom width (m)": "Dolní šířka (m)",
+  "Top width (m)": "Horní šířka (m)",
+  "Bottom thickness (m)": "Dolní tloušťka (m)",
+  "Top thickness (m)": "Horní tloušťka (m)"
 }

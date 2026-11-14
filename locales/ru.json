@@ -144,5 +144,21 @@
   "Images": "Изображения",
   "Slogan project": "Проект надписи",
   "Image mode (experimental)": "Режим изображения (эксперимент.)",
-  "Error details:": "Сведения об ошибке:"
+  "Error details:": "Сведения об ошибке:",
+  "Road reference (7 m)": "Дорога для масштаба (7 м)",
+  "Base length (m)": "Длина основания (м)",
+  "Base depth (m)": "Глубина основания (м)",
+  "Plinth height (m)": "Высота основания (м)",
+  "Wall height (m)": "Высота стены (м)",
+  "0 = automatic size": "0 = автоматический размер",
+  "Base color": "Цвет основания",
+  "Default material": "Материал по умолчанию",
+  "Iron back supports": "Железные задние опоры",
+  "Wall thickness (m)": "Толщина стены (м)",
+  "Stone sign": "Каменная вывеска",
+  "Stone height (m)": "Высота камня (м)",
+  "Bottom width (m)": "Ширина снизу (м)",
+  "Top width (m)": "Ширина сверху (м)",
+  "Bottom thickness (m)": "Толщина снизу (м)",
+  "Top thickness (m)": "Толщина сверху (м)"
 }

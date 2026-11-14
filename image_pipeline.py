@@ -87,7 +87,7 @@ def polygons(mask, smooth=.8):
 
 def extrude(shape,height,depth):
     x0,y0,x1,y1=shape.bounds; scale=height/(y1-y0)
-    def point(p,z): return (-(p[0]-(x0+x1)/2)*scale,(p[1]-y0)*scale+1.2,z)
+    def point(p,z): return ((p[0]-(x0+x1)/2)*scale,(p[1]-y0)*scale+1.2,z)
     tris=[]
     parts=list(shape.geoms) if hasattr(shape,'geoms') else [shape]
     for part in parts:
@@ -106,7 +106,7 @@ def extrude(shape,height,depth):
                 n=np.array([dy,-dx])/length; mid=(np.array(a)+np.array(b))/2
                 if part.contains(Point(mid+n*.001)): n=-n
                 q=[point(a,-depth/2),point(b,-depth/2),point(b,depth/2),point(a,depth/2)]
-                normal=(-n[0],n[1],0)
+                normal=(n[0],n[1],0)
                 tris.extend([(q[:3],normal),([q[0],q[2],q[3]],normal)])
         if (len(tris)+12)*3>=65536:
             raise ValueError('Model exceeds 65,535 vertices: simplify, remove noise or split into lines.')
@@ -117,8 +117,10 @@ def complexity(mask,smooth=.8):
     parts=list(shape.geoms) if hasattr(shape,'geoms') else [shape]
     return dict(vertices=(len(tris)+12)*3,components=len(parts),holes=sum(len(p.interiors) for p in parts))
 
-def generate_image(mask,output,height=9.,depth=1.,color='#be0f0c',smooth=.8,base_style='strip',weathering=0,building_name=''):
+def generate_image(mask,output,height=9.,depth=1.,color='#be0f0c',smooth=.8,base_style='strip',weathering=0,building_name='',base_size=None,base_color=None,supports=False):
     base_style,weathering=model_options.options(base_style,weathering)
+    base_size=model_options.base_options(base_size)
+    supports=bool(supports) and base_style!='stone'
     if not all(math.isfinite(v) for v in (height,depth,smooth)) or not (1<=height<=30 and .1<=depth<=5 and 0<=smooth<=4):
         raise ValueError('Height 1–30m; depth 0.1–5m; smoothing 0–4px.')
     if not re.fullmatch(r'#[0-9a-fA-F]{6}',color): raise ValueError('Color must be #RRGGBB.')
@@ -130,11 +132,11 @@ def generate_image(mask,output,height=9.,depth=1.,color='#be0f0c',smooth=.8,base
     with tempfile.TemporaryDirectory(prefix='image_slogan_') as tmp:
         root=Path(tmp)/ident; d=root/'slogan'; d.mkdir(parents=True)
         base_depth=max(5.,depth+2)
-        base,letters,base_depth=model_options.geometry(letters,width,height,depth,base_style)
-        model_options.write_geometry(d/'model.nmf',base,letters)
+        base,letters,base_depth=model_options.geometry(letters,width,height,depth,base_style,base_size,supports)
+        model_options.write_geometry(d/'model.nmf',base,letters,len(raw_letters))
         for filename in ['model.mtl','concrete.dds','blankspecular.dds','blankbump.dds','renderconfig.ini']:
             shutil.copy2(mesh.ASSETS/filename,d/filename)
-        model_options.write_materials(d,color,weathering)
+        model_options.write_materials(d,color,weathering,base_color,supports,base_style)
         (d/'building.ini').write_text(f'''$NAME_STR "{building_name or 'Image Slogan '+ident[-6:]}"
 $TYPE_MONUMENT
 $MONUMENT_GOVERNMENT_LOYALTY_RADIUS 150
@@ -151,7 +153,7 @@ $CONNECTION_PEDESTRIAN
 0 0 {base_depth/2}
 end
 ''',encoding='utf8')
-        export_helpers.thumbnail(root,raw_letters,width,height,depth,base_style,color,weathering)
+        export_helpers.thumbnail(root,raw_letters,width,height,depth,base_style,color,weathering,base_size,base_color,supports)
         (root/'workshopconfig.ini').write_text(f'''$ITEM_ID {ident}
 $OWNER_ID 0
 $ITEM_TYPE WORKSHOP_ITEMTYPE_BUILDING
@@ -162,7 +164,7 @@ $ITEM_DESC "Locally generated image silhouette. Placeholder ID, not for uploadin
 $END
 ''',encoding='utf8')
         mask.save(root/'source_mask.png')
-        (root/'generation.json').write_text(json.dumps(dict(building_name=building_name,mode='image',height=height,depth=depth,color=color,smoothing=smooth,vertices=(len(letters)+len(base))*3,base_style=base_style,weathering=weathering,local_only=True),indent=2))
+        (root/'generation.json').write_text(json.dumps(dict(building_name=building_name,mode='image',height=height,depth=depth,color=color,smoothing=smooth,vertices=(len(letters)+len(base))*3,base_style=base_style,weathering=weathering,base_size=base_size,base_color=base_color,supports=bool(supports),local_only=True),indent=2))
         shutil.copytree(root,destination)
     return destination
 

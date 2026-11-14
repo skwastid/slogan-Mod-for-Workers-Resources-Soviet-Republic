@@ -144,5 +144,21 @@
   "Images": "Obrazy",
   "Slogan project": "Projekt napisu",
   "Image mode (experimental)": "Tryb obrazu (eksperymentalny)",
-  "Error details:": "Szczegóły błędu:"
+  "Error details:": "Szczegóły błędu:",
+  "Road reference (7 m)": "Droga odniesienia (7 m)",
+  "Base length (m)": "Długość podstawy (m)",
+  "Base depth (m)": "Głębokość podstawy (m)",
+  "Plinth height (m)": "Wysokość podstawy (m)",
+  "Wall height (m)": "Wysokość ściany (m)",
+  "0 = automatic size": "0 = rozmiar automatyczny",
+  "Base color": "Kolor podstawy",
+  "Default material": "Materiał domyślny",
+  "Iron back supports": "Żelazne tylne podpory",
+  "Wall thickness (m)": "Grubość ściany (m)",
+  "Stone sign": "Kamienna tablica",
+  "Stone height (m)": "Wysokość kamienia (m)",
+  "Bottom width (m)": "Szerokość dołu (m)",
+  "Top width (m)": "Szerokość góry (m)",
+  "Bottom thickness (m)": "Grubość dołu (m)",
+  "Top thickness (m)": "Grubość góry (m)"
 }

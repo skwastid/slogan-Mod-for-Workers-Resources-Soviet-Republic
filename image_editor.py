@@ -327,7 +327,7 @@ class ImageEditor(tk.Toplevel):
         def builder(h,d):
             if 'shape' not in cached:cached['shape']=pipeline.polygons(mask,smooth)
             return pipeline.extrude(cached['shape'],h,d)
-        def exporter(h,d,c,base,age,name):return pipeline.generate_image(mask,output,h,d,c,smooth,base,age,name)
+        def exporter(h,d,c,base,age,name,size,base_color,supports):return pipeline.generate_image(mask,output,h,d,c,smooth,base,age,name,size,base_color,supports)
         ModelStudio(self,self.language,builder,exporter,height,depth,color,self.tr('图片标语 · 当前修补结果','Image slogan · current repaired mask'),initial=dict(self.appearance,height=height,depth=depth,color=color),on_change=self.update_appearance,on_save=self.save_project,building_name=self.building_name.get())
     def pick_color(self):
         c=colorchooser.askcolor(self.color.get(),parent=self)[1]
@@ -342,7 +342,7 @@ class ImageEditor(tk.Toplevel):
         self.job(lambda:pipeline.complexity(mask,smooth),lambda r:self.status.set(self.tr('顶点 {vertices}/65535；独立块 {components}；字内空洞 {holes}。','Vertices {vertices}/65535; components {components}; holes {holes}.').format(**r)))
     def generate(self):
         if self.mask is None:return
-        try:args=(self.mask.copy(),self.output.get(),float(self.height.get()),float(self.depth.get()),self.color.get(),self.smooth.get(),self.appearance.get('base_style','strip'),self.appearance.get('age',0),self.building_name.get())
+        try:args=(self.mask.copy(),self.output.get(),float(self.height.get()),float(self.depth.get()),self.color.get(),self.smooth.get(),self.appearance.get('base_style','strip'),self.appearance.get('age',0),self.building_name.get(),self.appearance.get('base_size'),self.appearance.get('base_color'),self.appearance.get('supports',False))
         except Exception as e:self.error(e);return
         def done(path):
             self.status.set(str(path));messagebox.showinfo(self.tr('生成完成','Generated'),str(path)+'\n\n'+self.tr('将数字文件夹复制到 media_soviet/workshop_wip。分离笔画可能悬空。','Copy the numeric folder to media_soviet/workshop_wip. Disconnected strokes may float.'),parent=self)

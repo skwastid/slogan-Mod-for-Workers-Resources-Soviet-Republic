@@ -144,5 +144,21 @@
   "Images": "Immagini",
   "Slogan project": "Progetto di scritta",
   "Image mode (experimental)": "Modalità immagine (sperimentale)",
-  "Error details:": "Dettagli errore:"
+  "Error details:": "Dettagli errore:",
+  "Road reference (7 m)": "Strada di riferimento (7 m)",
+  "Base length (m)": "Lunghezza base (m)",
+  "Base depth (m)": "Profondità base (m)",
+  "Plinth height (m)": "Altezza base (m)",
+  "Wall height (m)": "Altezza muro (m)",
+  "0 = automatic size": "0 = dimensioni automatiche",
+  "Base color": "Colore della base",
+  "Default material": "Materiale predefinito",
+  "Iron back supports": "Supporti posteriori in ferro",
+  "Wall thickness (m)": "Spessore del muro (m)",
+  "Stone sign": "Insegna in pietra",
+  "Stone height (m)": "Altezza della pietra (m)",
+  "Bottom width (m)": "Larghezza inferiore (m)",
+  "Top width (m)": "Larghezza superiore (m)",
+  "Bottom thickness (m)": "Spessore inferiore (m)",
+  "Top thickness (m)": "Spessore superiore (m)"
 }

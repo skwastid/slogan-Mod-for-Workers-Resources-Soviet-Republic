@@ -144,5 +144,21 @@
   "Images": "Bilder",
   "Slogan project": "Schriftzugprojekt",
   "Image mode (experimental)": "Bildmodus (experimentell)",
-  "Error details:": "Fehlerdetails:"
+  "Error details:": "Fehlerdetails:",
+  "Road reference (7 m)": "Straßenreferenz (7 m)",
+  "Base length (m)": "Sockellänge (m)",
+  "Base depth (m)": "Sockeltiefe (m)",
+  "Plinth height (m)": "Sockelhöhe (m)",
+  "Wall height (m)": "Wandhöhe (m)",
+  "0 = automatic size": "0 = automatische Größe",
+  "Base color": "Sockelfarbe",
+  "Default material": "Standardmaterial",
+  "Iron back supports": "Rückstützen aus Eisen",
+  "Wall thickness (m)": "Wandstärke (m)",
+  "Stone sign": "Steinschild",
+  "Stone height (m)": "Steinhöhe (m)",
+  "Bottom width (m)": "Untere Breite (m)",
+  "Top width (m)": "Obere Breite (m)",
+  "Bottom thickness (m)": "Untere Dicke (m)",
+  "Top thickness (m)": "Obere Dicke (m)"
 }

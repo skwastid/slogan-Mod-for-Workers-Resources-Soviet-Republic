@@ -44,13 +44,13 @@ if '--studio-self-test' in sys.argv:
     testfont=font_manager.findfont(font_manager.FontProperties(family='DejaVu Sans'))
     letters,width=mesh.glyph_nodes('Test',9,0,testfont,.8)
     preview3d.render(preview3d.scene(letters,width,9,.8,'wall','#be0f0c',75),700,420).save(target/'preview3d.png')
-    project=generate('Test',testfont,target,base_style='none',weathering=75)
+    project=generate('Test',testfont,target,base_style='strip',weathering=75,base_size={'height':2,'depth':8},base_color='#2777b7',supports=True)
     with tempfile.TemporaryDirectory() as td:
         game=Path(td);(game/'SOVIET64.exe').touch();(game/'media_soviet').mkdir()
         installed=game_install.install(project,game)
         assert (installed/'slogan/model.nmf').read_bytes()==(project/'slogan/model.nmf').read_bytes()
     window=tk.Tk();window.withdraw()
-    studio=ModelStudio(window,'English',lambda h,d:mesh.glyph_nodes('Test',h,0,testfont,d),lambda *a:None)
+    studio=ModelStudio(window,'English',lambda h,d:mesh.glyph_nodes('Test',h,0,testfont,d),lambda *a:None,initial={'base_size':{'height':2,'depth':8},'base_color':'#2777b7','supports':True})
     until=time.monotonic()+20
     while time.monotonic()<until:
         window.update();time.sleep(.02)
@@ -154,19 +154,31 @@ def languages():
     clear();root.title('3D Slogan Generator — Language / 语言')
     ttk.Label(page,text='YOUR OWN BIG SLOGAN',style='Brand.TLabel').pack(pady=(4,8))
     ttk.Label(page,text='选择语言 / Choose your language',style='Title.TLabel').pack(pady=(0,8))
-    ttk.Label(page,text='3D Slogan Generator · v1.0',style='Muted.TLabel').pack(pady=(0,18))
+    ttk.Label(page,text='3D Slogan Generator · v1.0.1',style='Muted.TLabel').pack(pady=(0,18))
     grid=ttk.Frame(page);grid.pack(fill='both',expand=True)
     for c in range(3):grid.columnconfigure(c,weight=1)
     for i,name in enumerate(STRINGS):
         ttk.Button(grid,text=name,style='Language.TButton',command=lambda n=name:form(n)).grid(row=i//3,column=i%3,sticky='nsew',padx=8,pady=8)
     for r in range(6):grid.rowconfigure(r,weight=1)
 
+installed_fonts=None
+
 def loadfonts():
-    if fonts:return
-    for path in sorted(font_manager.findSystemFonts()):
-        try:fonts[font_manager.FontProperties(fname=path).get_name()+' — '+Path(path).name]=path
+    global installed_fonts
+    import font_catalog
+    previous=fonts.get(fontchoice.get())
+    if installed_fonts is None:installed_fonts=set(font_manager.findSystemFonts())
+    paths=installed_fonts|set(fonts.values())
+    fonts.clear()
+    chinese=current in ('简体中文','繁體中文','繁体中文')
+    for path in sorted(paths):
+        try:
+            title=font_catalog.label(path) if chinese else font_manager.FontProperties(fname=path).get_name()+' — '+Path(path).name
+            fonts[title]=path
         except Exception:pass
-    if fonts:fontchoice.set(next((n for n in fonts if 'simhei' in n.lower()),next(iter(fonts))))
+    if fonts:
+        chosen=next((n for n,p in fonts.items() if p==previous),None)
+        fontchoice.set(chosen or next((n for n in fonts if ('msyh.ttc' if chinese else 'simhei') in n.lower()),next(iter(fonts))))
 
 def form(language):
     global current,labels,recovery_offered,recovery_ready
@@ -200,10 +212,36 @@ def form(language):
         if editor.get('1.0','end-1c')!=text.get():editor.delete('1.0','end');editor.insert('1.0',text.get());editor.edit_modified(False)
     editor.bind('<<Modified>>',text_changed);preview_traces.append((text,text.trace_add('write',sync_text)))
     label(3,2)
-    combo=ttk.Combobox(page,textvariable=fontchoice,values=sorted(fonts),state='readonly');combo.grid(row=3,column=1,sticky='ew',pady=4)
+    fontbox=ttk.Frame(page);fontbox.grid(row=3,column=1,sticky='ew',pady=4)
+    combo=ttk.Combobox(fontbox,textvariable=fontchoice,values=sorted(fonts),state='readonly');combo.pack(fill='x')
+    def update_font_list(*args):
+        if not zh:combo['values']=sorted(fonts);return
+        import font_catalog
+        matches=[]
+        for title,path in fonts.items():
+            try:
+                if font_catalog.matches(path,font_search.get().strip(),chinese_only.get()):matches.append(title)
+            except Exception:pass
+        matches.sort(key=lambda title:(not font_catalog.describe(fonts[title])['chinese'],title))
+        combo['values']=matches
+        font_count.set(('找到 ' if language=='简体中文' else '找到 ')+str(len(matches))+(' 款字体' if language=='简体中文' else ' 款字型'))
+    if zh:
+        font_search=tk.StringVar();chinese_only=tk.BooleanVar(value=True);font_count=tk.StringVar()
+        filters=ttk.Frame(fontbox);filters.pack(fill='x',pady=(5,0))
+        ttk.Label(filters,text='搜索字体' if language=='简体中文' else '搜尋字型').pack(side='left')
+        ttk.Entry(filters,textvariable=font_search,width=20).pack(side='left',fill='x',expand=True,padx=5)
+        ttk.Checkbutton(filters,text='仅显示中文字体' if language=='简体中文' else '僅顯示中文字型',variable=chinese_only,command=update_font_list).pack(side='left')
+        ttk.Label(fontbox,textvariable=font_count,style='Muted.TLabel').pack(anchor='w')
+        font_search.trace_add('write',update_font_list)
+        update_font_list()
+
     def fontfile():
         f=filedialog.askopenfilename(title=t[3],filetypes=[('TTF / OTF / TTC','*.ttf *.otf *.ttc')])
-        if f:fonts[f]=f;combo['values']=sorted(fonts);fontchoice.set(f)
+        if f:
+            import font_catalog
+            try:name=font_catalog.label(f) if zh else f
+            except Exception:name=f
+            fonts[name]=f;update_font_list();fontchoice.set(name)
     ttk.Button(page,text=t[3],command=fontfile).grid(row=3,column=2,padx=8)
     params=ui_theme.FlowBar(page);params.grid(row=4,column=0,columnspan=3,sticky='ew',pady=8)
     for caption,var in [(t[4],height),(t[5],thickness),(t[6],stroke)]:
@@ -252,7 +290,7 @@ def form(language):
             mode=direction.get();spacing=float(line_spacing.get());render(words,font,weight,c,200,80,mode,spacing)
         except Exception as e:messagebox.showerror(t[15],str(e));return
         def builder(h,d):return typography.glyph_mesh(words,font,h,d,weight,mode,spacing)
-        def exporter(h,d,c,base,age,name):return generate(words,font,out,h,d,weight,c,base,age,name,mode,spacing)
+        def exporter(h,d,c,base,age,name,size,base_color,supports):return generate(words,font,out,h,d,weight,c,base,age,name,mode,spacing,size,base_color,supports)
         ModelStudio(root,current,builder,exporter,h,d,c,words,initial=dict(appearance,height=h,depth=d,color=c),on_change=update_appearance,on_save=save_project,building_name=building_name.get())
     ttk.Button(page,text=tr('3D / appearance / install'),command=studio,style='Primary.TButton').grid(row=11,column=2,padx=8,pady=12)
     button=ttk.Button(page,text=t[11]);button.grid(row=11,column=1,pady=12,sticky='ew')
@@ -270,7 +308,7 @@ def form(language):
     def run():
         global busy
         if busy:return
-        try:args=(text.get(),fonts[fontchoice.get()],output.get(),float(height.get().replace(',','.')),float(thickness.get().replace(',','.')),float(stroke.get().replace(',','.')),color.get(),appearance.get('base_style','strip'),appearance.get('age',0),building_name.get(),direction.get(),float(line_spacing.get()))
+        try:args=(text.get(),fonts[fontchoice.get()],output.get(),float(height.get().replace(',','.')),float(thickness.get().replace(',','.')),float(stroke.get().replace(',','.')),color.get(),appearance.get('base_style','strip'),appearance.get('age',0),building_name.get(),direction.get(),float(line_spacing.get()),appearance.get('base_size'),appearance.get('base_color'),appearance.get('supports',False))
         except Exception as e:messagebox.showerror(t[15],t[16]+'\n'+str(e));return
         busy=True;button.state(['disabled']);back.state(['disabled']);status.set(t[13])
         def worker():

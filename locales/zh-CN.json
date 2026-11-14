@@ -144,5 +144,21 @@
   "Images": "图片",
   "Slogan project": "标语工程",
   "Image mode (experimental)": "图片生成（实验）",
-  "Error details:": "错误详情："
+  "Error details:": "错误详情：",
+  "Road reference (7 m)": "道路参照（7米）",
+  "Base length (m)": "底座长度（米）",
+  "Base depth (m)": "底座前后宽度（米）",
+  "Plinth height (m)": "台座高度（米）",
+  "Wall height (m)": "墙体高度（米）",
+  "0 = automatic size": "0 = 自动尺寸",
+  "Base color": "底座颜色",
+  "Default material": "默认材质",
+  "Iron back supports": "铁制背部支架",
+  "Wall thickness (m)": "墙体厚度（米）",
+  "Stone sign": "门牌石",
+  "Stone height (m)": "石体高度（米）",
+  "Bottom width (m)": "底部宽度（米）",
+  "Top width (m)": "顶部宽度（米）",
+  "Bottom thickness (m)": "底部厚度（米）",
+  "Top thickness (m)": "顶部厚度（米）"
 }

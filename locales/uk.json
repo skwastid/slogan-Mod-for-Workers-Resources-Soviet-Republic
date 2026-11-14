@@ -144,5 +144,21 @@
   "Images": "Зображення",
   "Slogan project": "Проєкт напису",
   "Image mode (experimental)": "Режим зображення (експерим.)",
-  "Error details:": "Подробиці помилки:"
+  "Error details:": "Подробиці помилки:",
+  "Road reference (7 m)": "Дорога для масштабу (7 м)",
+  "Base length (m)": "Довжина основи (м)",
+  "Base depth (m)": "Глибина основи (м)",
+  "Plinth height (m)": "Висота основи (м)",
+  "Wall height (m)": "Висота стіни (м)",
+  "0 = automatic size": "0 = автоматичний розмір",
+  "Base color": "Колір основи",
+  "Default material": "Типовий матеріал",
+  "Iron back supports": "Залізні задні опори",
+  "Wall thickness (m)": "Товщина стіни (м)",
+  "Stone sign": "Кам’яна вивіска",
+  "Stone height (m)": "Висота каменю (м)",
+  "Bottom width (m)": "Ширина знизу (м)",
+  "Top width (m)": "Ширина зверху (м)",
+  "Bottom thickness (m)": "Товщина знизу (м)",
+  "Top thickness (m)": "Товщина зверху (м)"
 }

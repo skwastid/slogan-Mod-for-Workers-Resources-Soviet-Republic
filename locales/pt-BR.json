@@ -144,5 +144,21 @@
   "Images": "Imagens",
   "Slogan project": "Projeto de letreiro",
   "Image mode (experimental)": "Modo imagem (experimental)",
-  "Error details:": "Detalhes do erro:"
+  "Error details:": "Detalhes do erro:",
+  "Road reference (7 m)": "Via de referência (7 m)",
+  "Base length (m)": "Comprimento da base (m)",
+  "Base depth (m)": "Profundidade da base (m)",
+  "Plinth height (m)": "Altura da base (m)",
+  "Wall height (m)": "Altura da parede (m)",
+  "0 = automatic size": "0 = tamanho automático",
+  "Base color": "Cor da base",
+  "Default material": "Material padrão",
+  "Iron back supports": "Suportes traseiros de ferro",
+  "Wall thickness (m)": "Espessura da parede (m)",
+  "Stone sign": "Placa de pedra",
+  "Stone height (m)": "Altura da pedra (m)",
+  "Bottom width (m)": "Largura inferior (m)",
+  "Top width (m)": "Largura superior (m)",
+  "Bottom thickness (m)": "Espessura inferior (m)",
+  "Top thickness (m)": "Espessura superior (m)"
 }

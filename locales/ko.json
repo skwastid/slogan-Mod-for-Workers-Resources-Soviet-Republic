@@ -144,5 +144,21 @@
   "Images": "이미지",
   "Slogan project": "표어 프로젝트",
   "Image mode (experimental)": "이미지 모드 (실험 기능)",
-  "Error details:": "오류 세부 정보:"
+  "Error details:": "오류 세부 정보:",
+  "Road reference (7 m)": "도로 비교 표시 (7m)",
+  "Base length (m)": "받침대 길이(m)",
+  "Base depth (m)": "받침대 깊이(m)",
+  "Plinth height (m)": "받침대 높이(m)",
+  "Wall height (m)": "벽 높이(m)",
+  "0 = automatic size": "0 = 자동 크기",
+  "Base color": "받침대 색상",
+  "Default material": "기본 재질",
+  "Iron back supports": "철제 후면 지지대",
+  "Wall thickness (m)": "벽 두께(m)",
+  "Stone sign": "석재 간판",
+  "Stone height (m)": "석재 높이(m)",
+  "Bottom width (m)": "하단 너비(m)",
+  "Top width (m)": "상단 너비(m)",
+  "Bottom thickness (m)": "하단 두께(m)",
+  "Top thickness (m)": "상단 두께(m)"
 }

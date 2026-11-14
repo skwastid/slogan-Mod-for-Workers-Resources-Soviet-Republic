@@ -144,5 +144,21 @@
   "Images": "Изображения",
   "Slogan project": "Проект на надпис",
   "Image mode (experimental)": "Режим изображение (експерим.)",
-  "Error details:": "Подробности за грешката:"
+  "Error details:": "Подробности за грешката:",
+  "Road reference (7 m)": "Път за мащаб (7 м)",
+  "Base length (m)": "Дължина на основата (м)",
+  "Base depth (m)": "Дълбочина на основата (м)",
+  "Plinth height (m)": "Височина на основата (м)",
+  "Wall height (m)": "Височина на стената (м)",
+  "0 = automatic size": "0 = автоматичен размер",
+  "Base color": "Цвят на основата",
+  "Default material": "Материал по подразбиране",
+  "Iron back supports": "Железни задни опори",
+  "Wall thickness (m)": "Дебелина на стената (м)",
+  "Stone sign": "Каменна табела",
+  "Stone height (m)": "Височина на камъка (м)",
+  "Bottom width (m)": "Ширина отдолу (м)",
+  "Top width (m)": "Ширина отгоре (м)",
+  "Bottom thickness (m)": "Дебелина отдолу (м)",
+  "Top thickness (m)": "Дебелина отгоре (м)"
 }
